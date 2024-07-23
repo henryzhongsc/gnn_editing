@@ -1,0 +1,23 @@
+{
+    "pipeline_params": {
+        "method": "seed_gnn",
+        "model_name": "GCN_MLP",
+        "architecture": {
+            "num_layers": 2,
+            "hidden_channels": 32,
+            "dropout": 0.1,
+            "batch_norm": false,
+            "residual": false
+        },
+        "load_pretrained_backbone": true,
+        "optim": "adam",
+        "pretrain_lr": 0.01,
+        "edit_lr": 0.001,
+        "epochs": 400,
+        "max_num_edit_steps": 500,
+        "normalize": true,
+        "loop": true,
+        "alpha": 0.25,
+        "beta": 100
+    }
+}

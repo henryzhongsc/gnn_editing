@@ -1,0 +1,21 @@
+{
+    "pipeline_params": {
+        "method": "egnn",
+        "model_name": "GAT_MLP",
+        "architecture": {
+            "num_layers": 3,
+            "hidden_channels": 256,
+            "dropout": 0.5,
+            "batch_norm": false,
+            "residual": false
+        },
+        "load_pretrained_backbone": true,
+        "optim": "adam",
+        "pretrain_lr": 0.002,
+        "edit_lr": 0.01,
+        "epochs": 500,
+        "max_num_edit_steps": 500,
+        "normalize": false,
+        "loop": false
+    }
+}
