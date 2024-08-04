@@ -2,7 +2,7 @@ from tqdm import tqdm
 from copy import deepcopy
 
 from edit_gnn.utils import test, success_rate
-from seed_gnn.utils import get_optimizer, edit
+from pipelines.seed_gnn.utils import get_optimizer, edit
 
 def egnn_edit(config, model, node_idx_2flip, flipped_label, whole_data, max_num_step):
         model.train()

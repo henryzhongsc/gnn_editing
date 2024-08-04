@@ -14,8 +14,8 @@ from main_utils import set_seeds_all
 from models.base import BaseModel
 from data import get_data, prepare_dataset
 from edit_gnn.utils import grab_input, test
-from seed_gnn.utils import get_optimizer, save_model
-from seed_gnn.seed_gnn_logging import Logger
+from pipelines.seed_gnn.utils import get_optimizer, save_model
+from pipelines.seed_gnn.seed_gnn_logging import Logger
 
 
 def train_loop(

@@ -9,7 +9,7 @@ from torch_geometric.utils import k_hop_subgraph
 from main_utils import set_seeds_all
 from models.base import BaseModel
 from edit_gnn.utils import test, success_rate, prediction
-from seed_gnn.utils import get_optimizer, edit
+from pipelines.seed_gnn.utils import get_optimizer, edit
 
 
 def select_mixup_training_nodes(model: BaseModel,

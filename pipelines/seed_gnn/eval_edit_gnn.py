@@ -9,9 +9,9 @@ from main_utils import set_seeds_all
 from data import get_data, prepare_dataset
 from constants import SEED
 from edit_gnn.utils import test, select_edit_target_nodes, process_edit_results
-from seed_gnn.utils import finetune_gnn_mlp
-from seed_gnn.egnn import egnn_edit
-from seed_gnn.seed_gnn import seed_gnn_edit
+from pipelines.seed_gnn.utils import finetune_gnn_mlp, process_raw_exp_results
+from pipelines.seed_gnn.egnn import egnn_edit
+from pipelines.seed_gnn.seed_gnn import seed_gnn_edit
 
 def eval_edit_gnn(config):
     set_seeds_all(SEED)
@@ -67,4 +67,7 @@ def eval_edit_gnn(config):
         logger.info(f"Editing method {config['pipeline_params']['method']} is not implemented.")
         raise NotImplementedError
 
-    return process_edit_results(bef_edit_results, raw_results)
+    raw_results = process_edit_results(bef_edit_results, raw_results)
+    processed_results = process_raw_exp_results(raw_results)
+
+    return raw_results, processed_results

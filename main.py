@@ -10,8 +10,8 @@ sys.path.append(base_dir)
 os.chdir(base_dir)
 
 import main_utils as main_utils
-from seed_gnn.eval_edit_gnn import eval_edit_gnn
-from seed_gnn.pretrain_gnn import pretrain_gnn
+from pipelines.seed_gnn.eval_edit_gnn import eval_edit_gnn
+from pipelines.seed_gnn.pretrain_gnn import pretrain_gnn
 from constants import NODE_CLASSIFICATION_DATASETS, SEED
 
 main_utils.set_seeds_all(SEED)
@@ -28,8 +28,9 @@ logger.info(json.dumps(config, indent=4))
 
 if config['eval_params']['dataset'] in NODE_CLASSIFICATION_DATASETS:
     if config['management']['task'] == 'edit':
-        results = eval_edit_gnn(config)
-        main_utils.register_result(results, config)
+        raw_results, processed_results = eval_edit_gnn(config)
+        main_utils.register_result(raw_results, config)
+        config['eval_results'] = processed_results
     elif config['management']['task'] == 'pretrain':
         pretrain_gnn(config)
     else:

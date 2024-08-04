@@ -99,7 +99,7 @@ def select_edit_target_nodes(model: BaseModel,
 
 def process_edit_results(bef_edit_results, raw_results):
     bef_edit_tra_acc, bef_edit_val_acc, bef_edit_tst_acc = bef_edit_results
-    success_rate = 0
+    average_success_rate = 0
     success_list = []
     average_dd = []
     highest_dd = []
@@ -113,7 +113,7 @@ def process_edit_results(bef_edit_results, raw_results):
     test_drawdown = test_drawdown = np.round((np.array([bef_edit_tst_acc] * len(test_acc)) - np.array(test_acc)), decimals = 3).tolist()
     average_dd = np.round(np.mean(np.array([bef_edit_tst_acc] * len(test_acc)) - np.array(test_acc)), decimals=3) * 100
 
-    success_rate = np.round(np.mean(succeses), decimals = 3).tolist()
+    average_success_rate = np.round(np.mean(succeses), decimals = 3).tolist()
     success_list = np.round(np.array(succeses), decimals = 3).tolist()
 
     test_drawdown = [test_drawdown * 100] if not isinstance(test_drawdown, list) else [round(d * 100, 1) for d in test_drawdown]
@@ -145,7 +145,7 @@ def process_edit_results(bef_edit_results, raw_results):
                 tra_drawdown=tra_drawdown * 100,
                 val_drawdown=val_drawdown * 100,
                 test_drawdown=test_drawdown,
-                success_rate=success_rate,
+                average_success_rate=average_success_rate,
                 success_list = success_list,
                 average_dd = average_dd,
                 test_dd_std=test_dd_std,

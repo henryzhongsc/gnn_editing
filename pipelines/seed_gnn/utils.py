@@ -173,3 +173,14 @@ def edit(model, whole_data, idx, f_label, optimizer, max_num_step,
         return model, bef_edit_success, 0, 0, 0, 0
 
     return single_edit(model, whole_data, idx, f_label, optimizer, max_num_step, num_edit_targets=num_edit_targets)
+
+def process_raw_exp_results(raw_results):
+    processed_results = {}
+
+    processed_results['bef_edit_tst_acc'] = raw_results['bef_edit_tst_acc']
+    processed_results['selected_result'] = raw_results['selected_result']
+    processed_results['highest_dd'] = raw_results['highest_dd']
+    processed_results['average_dd'] = raw_results['average_dd']
+    processed_results['average_sucess_rate'] = raw_results['average_success_rate']
+    
+    return processed_results
