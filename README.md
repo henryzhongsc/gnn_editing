@@ -3,7 +3,7 @@
 > This is the official implementation for our ICML 2024 SEED-GNN paper ([OpenReview](https://openreview.net/forum?id=rIc9adYbH2)).
 
 
-Should you need to cite this work or find our codebase useful, here's the BibTex:
+Should you need to cite this work or find our codebase useful, here's the BibTeX:
 
 ```
 @inproceedings{zhong_le2024gnns_editing,
@@ -21,8 +21,9 @@ Should you need to cite this work or find our codebase useful, here's the BibTex
 `TL;DR` Model editing is popular in almost every other domain except graph because GNN editing is innately hard with no usable
 method available. We reveal the roots of such complications and present the 1st GNN-editing work that lives up to real-life scrutiny.
 
-`Abstract` Suppose a self-driving car is crashing into pedestrians, or a chatbot is instructing its users to conduct criminal wrongdoing; the stakeholders of such products will undoubtedly want to patch these catastrophic errors as soon as possible. To address such concerns, *Model Editing:* the study of efficiently patching model behaviors without significantly altering their general performance, has seen considerable activity, with hundreds of editing techniques developed in various domains such as CV and NLP. However, **the graph learning community has objectively fallen behind with only a few Graph Neural Network-compatible — and just one GNN-specific — model editing methods available**, where all of which are limited in their practical scope. We argue that the impracticality of these methods lies in their lack of *Sequential Editing Robustness:* the ability to edit multiple errors sequentially, and therefore fall short in effectiveness, as this approach mirrors how errors are discovered and addressed in the real world. In this paper, we delve into the specific reasons behind the difficulty of editing GNNs in succession and observe the root cause to be model overfitting. We subsequently propose a simple yet effective solution — SEED-GNN — by leveraging overfit-prevention techniques in a GNN-specific context to derive the first and only GNN model editing method that scales practically. Additionally, we formally frame the task paradigm of GNN editing and hope to inspire future research in this crucial but currently overlooked field. Please refer to our GitHub repository for code and checkpoints.
+![Main Procedure of SEED-GNN](https://github.com/henryzhongsc/gnn_editing/blob/main/visualization/seed_gnn_pipeline_vis.png)
 
+**Main Procedure of SEED-GNN.** To edit an editing target $e_i$, we form an editing batch consisting of four types of components: the current editing target $e_i$ itself, previous editing targets $e_1, \dots, e_{i-1}$, $e_i$'s neighbors that happen to be in the train set $\mathcal{N}(e_i) \cap D_\text{train}$, and randomly selected training samples from the train set $\texttt{Rand}(D_\text{train})$. We follow the Frozen GNN + Active MLP design proposed in EGNN by [Liu et al., 2023](https://arxiv.org/abs/2305.15529), where we combine the output of the GNN and the MLP part as the final output of SEED-GNN's `forward()`, but only `backward()` update the MLP weights to host the editing effect. The weight update terminates either because the predictions of $e_i$ and $e_1, \dots, e_{i-1}$ are corrected, or if the *Steps* budget in Table 7 is fully spent. Please refer to Section 5 of our paper for details.
 
 ---
 ## Environment Setup
@@ -98,7 +99,7 @@ Once the experiment is executed, you should be able to monitor real time printou
 
 
 * `input_config` folder: This folder contains an `input_pipeline_config.json` and an`input_eval_config.json`. These are the carbon copy of the configs supplied to the `pipeline_config_dir` and `eval_config_dir` arguments of the editing script. Such configs are copied here for easy replication purposes as these two configs basically define an experiment.
-* `output_config.json`: This file provides a fuse of the above two input configs and some management information (e.g., start/end time of a job). Most importantly, it highlights the main reported metrics under the key `eval_results,` which are as follows:
+* `output_config.json`: This file provides a fuse of the above two input configs and some management information (e.g., start/end time of a job). Most importantly, it highlights the main reported metrics under the key `eval_results`, which are as follows:
     * `bef_edit_tst_acc`: Pre-edit accuracy of a model. **PE Acc.** in the main tables of our paper.
     * `selected_result`: A dictionary in the format of `{nth_edit: [test_drawdown, success_rate]...}`. In this case, we highlight the **1, 10, 25, and 50th edit as Test Drawdown (Success Rate)** in the main tables of our paper.
     * `highest_dd`: Highest Test Drawdown happened during all edits. **Max DD** in the main tables of our paper.
